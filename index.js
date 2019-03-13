@@ -12,11 +12,12 @@ mongoose.connect(db.mongoURI, {
     .then(() => console.log('MongoDB was successfully connected'))
     .catch((err) => console.log(err));
 
-const genresRoutes = require('./components/genres/genre.routes');
+const customers = require('./components/customers/customer.routes');
+const genres = require('./components/genres/genre.routes');
 
 app.use(express.json());
-
-app.use('/api/v1/genres', genresRoutes);
+app.use('/api/v1/customers', customers);
+app.use('/api/v1/genres', genres);
 
 app.all('*', (req, res) => {
     res.status(404).json({ error: { message: 'Not Found' }});
