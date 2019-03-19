@@ -3,7 +3,7 @@ const {Customer, validate} = require('./customer.model');
 exports.index = async (req, res) => {
     try {
         const customers = await Customer.find().sort('name');
-        res.status(200).send(customers);
+        res.send(customers);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
     try {
         const customer = await Customer.findById(req.params.id);
-        res.status(200).send(customer);
+        res.send(customer);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -59,7 +59,7 @@ exports.update = async (req, res) => {
                 phone: req.body.phone
             }, { new: true }
         );
-        res.status(200).send(customer);
+        res.send(customer);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -70,7 +70,7 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
     try {
         const customer = await Customer.findOneAndDelete({ _id: req.params.id });
-        res.status(200).send(customer);
+        res.send(customer);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }

@@ -18,9 +18,10 @@ mongoose.connect(db.mongoURI, {
 
 app.use(express.json());
 
-app.group('/api/v1', (router) => {
-    router.use('/customers', require('./components/customers'));
-    router.use('/genres', require('./components/genres'));
+app.group('/api', (router) => {
+    router.use('/', require('./components/customers'));
+    router.use('/', require('./components/genres'));
+    router.use('/', require('./components/movies'));
 });
 
 app.use((req, res, next) => {

@@ -3,7 +3,7 @@ const {Genre, validate} = require('./genre.model');
 exports.index = async (req, res) => {
     try {
         const genres = await Genre.find().sort('name');
-        res.status(200).send(genres);
+        res.send(genres);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
     try {
         const genre = await Genre.findById(req.params.id);
-        res.status(200).send(genre);
+        res.send(genre);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -53,7 +53,7 @@ exports.update = async (req, res) => {
             { name: req.body.name },
             { new: true }
         );
-        res.status(200).send(genre);
+        res.send(genre);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
@@ -64,7 +64,7 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
     try {
         const genre = await Genre.findOneAndDelete({ _id: req.params.id });
-        res.status(200).send(genre);
+        res.send(genre);
     } catch(err) {
         res.status(404).json({
             error: { message: err.message }
