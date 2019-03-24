@@ -1,6 +1,10 @@
 const {Rental, validate} = require('./rental.model');
 const {Customer} = require('../customers/customer.model');
 const {Movie} = require('../movies/movie.model');
+const mongoose = require('mongoose');
+const Fawn = require('fawn');
+
+Fawn.init(mongoose);
 
 exports.index = async (req, res) => {
     try {
@@ -50,10 +54,13 @@ exports.store = async (req, res) => {
                 dailyRentalRate: movie.dailyRentalRate
             }
         });
-        rental = await rental.save();
-
-        movie.numberInStock--;
-        await movie.save();
+        
+        new Fawn.Task()
+            .save('rentals', rental)
+            .update('movies', { _id: movie._id }, {
+                $inc: { numberInStock: -1 }
+            })
+            .run();
 
         res.status(201).send(rental);
     } catch(err) {
